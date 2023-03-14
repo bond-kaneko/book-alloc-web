@@ -5,6 +5,7 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   }
 } : {}
 export default {
+  target: 'static',
   ...routerBase,
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
