@@ -7,6 +7,7 @@ const password = ref('')
 
 <template>
   <div class="container">
+    <div class="notification is-link is-light">空白のままログインできます</div>
     <section class="section">
       <h1 class="title">Login</h1>
     </section>
