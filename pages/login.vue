@@ -3,24 +3,44 @@ import { ref } from 'vue'
 
 const email = ref('')
 const password = ref('')
-const valid = ref(false)
 </script>
 
 <template>
-  <div>
-    <div>
-      <h1>Login</h1>
-    </div>
-    <div>
-      <v-form v-model="valid">
-        <v-row>
-          <v-col cols="12" md="4">
-            <v-text-field v-model="email"></v-text-field>
-            <v-text-field v-model="password"></v-text-field>
-          </v-col>
-        </v-row>
-        <v-btn type="submit">Login</v-btn>
-      </v-form>
-    </div>
+  <div class="container">
+    <section class="section">
+      <h1 class="title">Login</h1>
+    </section>
+    <section class="section">
+      <form action="login" method="post">
+        <div class="control">
+          <label class="label" for="email">Email</label>
+          <input
+            id="email"
+            v-model="email"
+            name="email"
+            type="text"
+            class="input"
+          />
+        </div>
+        <div class="control">
+          <label class="label" for="password">Password</label>
+          <input
+            id="password"
+            v-model="password"
+            name="password"
+            type="password"
+            class="input"
+          />
+        </div>
+        <div class="field is-grouped">
+          <div class="control mt-3 is-flex">
+            <button class="button is-link">Submit</button>
+            <div class="is-align-self-center">
+              <a href="#" class="my-auto ml-2">Forget password? </a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
   </div>
 </template>
