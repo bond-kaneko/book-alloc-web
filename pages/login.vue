@@ -35,7 +35,7 @@ const password = ref('')
         </div>
         <div class="field is-grouped">
           <div class="control mt-3 is-flex">
-            <button class="button is-link">Submit</button>
+            <a class="button is-link" href="users">Submit</a>
             <div class="is-align-self-center">
               <a href="#" class="my-auto ml-2">Forget password? </a>
             </div>
