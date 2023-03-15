@@ -1,18 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { PieChart } from './pieChart'
-
-const pieChartRef = ref<HTMLCanvasElement | null>(null)
-const tipRef = ref<HTMLCanvasElement | null>(null)
-onMounted(() => {
-  if (pieChartRef.value != null && tipRef.value != null) {
-    const canvas = pieChartRef.value
-    const tip = tipRef.value
-
-    const pieChart = new PieChart(canvas, tip)
-    pieChart.render()
-  }
-})
+import DoughnutChart from '@/components/charts/DoughnutChart.vue'
 </script>
 
 <template>
@@ -22,15 +9,7 @@ onMounted(() => {
     </div>
     <section class="section"><h1 class="title">ページタイトル</h1></section>
     <section class="section">
-      <canvas
-        ref="pieChartRef"
-        width="200"
-        height="200"
-        values="[20, 40, 40]"
-        labels='["Not Good", "Good", "Very Good"]'
-      >
-      </canvas>
-      <canvas ref="tipRef" width="100" height="25"></canvas>
+      <doughnut-chart></doughnut-chart>
     </section>
     <section class="section">
       <h2 class="title">読んでる本</h2>
