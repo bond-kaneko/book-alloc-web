@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
+import { useRouter } from '@nuxtjs/composition-api'
 const Chart = require('chart.js')
 
 const props = defineProps({
@@ -7,12 +8,12 @@ const props = defineProps({
   datasets: Array
 })
 
-const canvasRef = ref<HTMLCanvasElement | null>(null)
+const router = useRouter()
 
+const canvasRef = ref<HTMLCanvasElement | null>(null)
 onMounted(() => {
   if (canvasRef.value != null) {
     const canvas = canvasRef.value
-
     // eslint-disable-next-line no-new
     new Chart(canvas, {
       type: 'doughnut',
@@ -20,6 +21,11 @@ onMounted(() => {
         labels: props.labels,
         datasets: props.datasets,
       },
+      options: {
+        onClick: (e, elm) => {
+          router.push('/login')
+        }
+      }
     })
   }
 })

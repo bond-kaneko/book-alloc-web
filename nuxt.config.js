@@ -46,6 +46,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/composition-api/module'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
