@@ -5,7 +5,7 @@ const Chart = require('chart.js')
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 onMounted(() => {
   if (canvasRef.value != null) {
-    const canvas = canvasRef.value!
+    const canvas = canvasRef.value
 
     // eslint-disable-next-line no-new
     new Chart(canvas, {
