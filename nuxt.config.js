@@ -92,7 +92,7 @@ export default {
     imports: [
       {
         set: "@fortawesome/free-solid-svg-icons",
-        icons: ["faHome", "faBookOpen"],
+        icons: ["faHome", "faBookOpen", "faBook", "faCheck", "faBookBookmark"],
       },
 
     ],

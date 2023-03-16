@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DoughnutChart from '@/components/charts/DoughnutChart.vue'
+import DevMessage from "~/components/dev/DevMessage.vue";
 
 const redCode: string = 'rgb(255, 99, 132)'
 const blueCode: string = 'rgb(54, 162, 235)'
@@ -33,13 +34,9 @@ const actualDatasets: Dataset[] = [
 
 <template>
   <div class="container">
-    <div class="notification is-link is-light">
-      ランディングページです。<br/>ポートフォリオの円グラフと、読書中の本を表示します。
-    </div>
+    <dev-message message="ランディングページです。ポートフォリオの円グラフと、読書中の本を表示します。"></dev-message>
     <section class="section"><h1 class="title">ページタイトル</h1></section>
-    <div class="notification is-link is-light">
-      読書ポートフォリオの予実を表示します。<br>グラフをクリックすると、該当カテゴリの本画面に移動します。<br>試しに「技術書」をクリックしてみてください。
-    </div>
+    <dev-message message="読書ポートフォリオの予実を表示します。グラフをクリックすると、該当カテゴリの本画面に移動します。試しに「技術書」をクリックしてみてください。"></dev-message>
     <section class="section is-flex">
       <div style="flex-basis: 50%;">
         <h2 class="subtitle">予定</h2>
