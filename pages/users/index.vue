@@ -1,15 +1,54 @@
 <script setup lang="ts">
 import DoughnutChart from '@/components/charts/DoughnutChart.vue'
+
+const redCode: string = 'rgb(255, 99, 132)'
+const blueCode: string = 'rgb(54, 162, 235)'
+const yellowCode: string = 'rgb(255, 205, 86)'
+
+type Dataset = {
+  label: string,
+  data: number[],
+  backgroundColor: string[],
+  hoverOffset: number,
+};
+
+const planDatasets: Dataset[] = [
+  {
+    label: '予定',
+    data: [30, 50, 20],
+    backgroundColor: [redCode, blueCode, yellowCode],
+    hoverOffset: 4
+  },
+]
+
+const actualDatasets: Dataset[] = [
+  {
+    label: '実際',
+    data: [80, 10, 10],
+    backgroundColor: [redCode, blueCode, yellowCode],
+    hoverOffset: 4
+  },
+]
 </script>
 
 <template>
   <div class="container">
     <div class="notification is-link is-light">
-      ランディングページです。<br />ポートフォリオの円グラフと、読書中の本を表示します。
+      ランディングページです。<br/>ポートフォリオの円グラフと、読書中の本を表示します。
     </div>
     <section class="section"><h1 class="title">ページタイトル</h1></section>
-    <section class="section">
-      <doughnut-chart></doughnut-chart>
+    <div class="notification is-link is-light">
+      読書ポートフォリオの予実を表示します。「実際」のグラフをホバーすると、該当するカテゴリで読んでいる本のタイトルが表示されます。
+    </div>
+    <section class="section is-flex">
+      <div style="flex-basis: 50%;">
+        <h2 class="subtitle">予定</h2>
+        <doughnut-chart :labels="['技術書', 'ビジネス書', '古典']" :datasets="planDatasets"></doughnut-chart>
+      </div>
+      <div style="flex-basis: 50%;">
+        <h2 class="subtitle">実際</h2>
+        <doughnut-chart :labels="['技術書', 'ビジネス書', '古典']" :datasets="actualDatasets"></doughnut-chart>
+      </div>
     </section>
     <section class="section">
       <h2 class="title">読んでる本</h2>
@@ -40,7 +79,7 @@ import DoughnutChart from '@/components/charts/DoughnutChart.vue'
           <div class="card mx-3">
             <div class="card-image">
               <figure class="image is-4by5">
-                <img src="https://www.iwanami.co.jp//images/book/621636.jpg" />
+                <img src="https://www.iwanami.co.jp//images/book/621636.jpg"/>
               </figure>
             </div>
           </div>
@@ -60,7 +99,7 @@ import DoughnutChart from '@/components/charts/DoughnutChart.vue'
           <div class="card mx-3">
             <div class="card-image">
               <figure class="image is-4by5">
-                <img src="https://www.iwanami.co.jp//images/book/621803.jpg" />
+                <img src="https://www.iwanami.co.jp//images/book/621803.jpg"/>
               </figure>
             </div>
           </div>

@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-
+import {onMounted, ref} from 'vue'
 const Chart = require('chart.js')
+
+const props = defineProps({
+  labels: Array,
+  datasets: Array
+})
+
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+
 onMounted(() => {
   if (canvasRef.value != null) {
     const canvas = canvasRef.value
@@ -11,19 +17,8 @@ onMounted(() => {
     new Chart(canvas, {
       type: 'doughnut',
       data: {
-        labels: ['Red', 'Blue', 'Yellow'],
-        datasets: [
-          {
-            label: 'My First Dataset',
-            data: [300, 50, 100],
-            backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-              'rgb(255, 205, 86)',
-            ],
-            hoverOffset: 4,
-          },
-        ],
+        labels: props.labels,
+        datasets: props.datasets,
       },
     })
   }
