@@ -23,7 +23,8 @@ onMounted(() => {
       },
       options: {
         onClick: (e, elm) => {
-          router.push('/login')
+          const allocationId = elm[0]._index
+          router.push('/allocations/' + allocationId.toString())
         }
       }
     })

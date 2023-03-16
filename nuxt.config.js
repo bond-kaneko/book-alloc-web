@@ -46,7 +46,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/composition-api/module'
+    '@nuxtjs/composition-api/module',
+    'nuxt-fontawesome'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -85,5 +86,15 @@ export default {
   build: {},
   generate: {
     dir: 'docs'
-  }
+  },
+  fontawesome: {
+    component: "fa",
+    imports: [
+      {
+        set: "@fortawesome/free-solid-svg-icons",
+        icons: ["faHome", "faBookOpen"],
+      },
+
+    ],
+  },
 }
