@@ -6,6 +6,8 @@ const redCode: string = 'rgb(255, 99, 132)'
 const blueCode: string = 'rgb(54, 162, 235)'
 const yellowCode: string = 'rgb(255, 205, 86)'
 
+const labels = ['技術書', 'ビジネス書', '古典']
+
 type Dataset = {
   label: string,
   data: number[],
@@ -39,12 +41,15 @@ const actualDatasets: Dataset[] = [
     <dev-message message="読書ポートフォリオの予実を表示します。グラフをクリックすると、該当カテゴリの本画面に移動します。試しに「技術書」をクリックしてみてください。"></dev-message>
     <section class="section is-flex">
       <div style="flex-basis: 50%;">
-        <h2 class="subtitle">予定</h2>
-        <doughnut-chart :labels="['技術書', 'ビジネス書', '古典']" :datasets="planDatasets"></doughnut-chart>
+        <div class="is-flex">
+          <h2 class="subtitle">予定</h2>
+          <NuxtLink to="/allocations" class="ml-2">編集</NuxtLink>
+        </div>
+        <doughnut-chart :labels="labels" :datasets="planDatasets"></doughnut-chart>
       </div>
       <div style="flex-basis: 50%;">
         <h2 class="subtitle">実際</h2>
-        <doughnut-chart :labels="['技術書', 'ビジネス書', '古典']" :datasets="actualDatasets"></doughnut-chart>
+        <doughnut-chart :labels="labels" :datasets="actualDatasets"></doughnut-chart>
       </div>
     </section>
     <section class="section">
