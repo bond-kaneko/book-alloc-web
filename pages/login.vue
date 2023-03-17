@@ -5,14 +5,45 @@ const email = ref('')
 const password = ref('')
 </script>
 
+<script lang="ts">
+import {defineComponent} from "@nuxtjs/composition-api";
+
+export default defineComponent({
+  middleware: "auth",
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    async login() {
+      this.error = false
+      try {
+        await this.$auth.loginWith('local', { data: {
+            'email': this.email,
+            'password': this.password,
+          } })
+          .then(()=>{
+            this.processing = false
+          })
+      } catch (err) {
+        console.log(err)
+        this.auth.error = true
+      }
+    }
+  }
+})
+
+</script>
+
 <template>
   <div class="container">
-    <div class="notification is-link is-light">空白のままログインできます</div>
     <section class="section">
       <h1 class="title">Login</h1>
     </section>
     <section class="section">
-      <form action="login" method="post">
+      <form @submit.prevent="login">
         <div class="control">
           <label class="label" for="email">Email</label>
           <input
@@ -35,9 +66,9 @@ const password = ref('')
         </div>
         <div class="field is-grouped">
           <div class="control mt-3 is-flex">
-            <a class="button is-link" href="users">Submit</a>
+            <button class="button is-primary">Submit</button>
             <div class="is-align-self-center">
-              <a href="#" class="my-auto ml-2">Forget password? </a>
+              <a href="#" class="my-auto ml-2">Forget password?</a>
             </div>
           </div>
         </div>

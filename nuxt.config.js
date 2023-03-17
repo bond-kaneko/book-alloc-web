@@ -47,14 +47,43 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/composition-api/module',
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://localhost:8888/auth/v1',
   },
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: false,
+      home: '/users/index'
+    },
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          required: true,
+          type: 'Bearer'
+        },
+        user: {
+          property: 'user',
+          autoFetch: false
+        },
+        endpoints: {
+          login: { url: '/auth/v1/login', method: 'post' },
+          logout: { url: '/auth/v1/logout', method: 'post' },
+          user: { url: '/auth/v1/users/me', method: 'get' }
+        }
+      }
+    },
+  },
+
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -97,4 +126,5 @@ export default {
 
     ],
   },
+
 }
