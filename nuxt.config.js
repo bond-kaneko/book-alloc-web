@@ -54,7 +54,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:8888/auth/v1',
+    baseURL: 'http://localhost:8888/',
   },
   auth: {
     redirect: {
@@ -76,7 +76,7 @@ export default {
           autoFetch: false
         },
         endpoints: {
-          login: { url: '/auth/v1/login', method: 'post' },
+          login: { url: '/login', method: 'post' },
           logout: { url: '/auth/v1/logout', method: 'post' },
           user: { url: '/auth/v1/users/me', method: 'get' }
         }

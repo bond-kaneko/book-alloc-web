@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import {ref} from 'vue'
-
-const email = ref('')
-const password = ref('')
-</script>
 
 <script lang="ts">
 import {defineComponent} from "@nuxtjs/composition-api";
@@ -24,12 +18,9 @@ export default defineComponent({
             'email': this.email,
             'password': this.password,
           } })
-          .then(()=>{
-            this.processing = false
-          })
+        this.$router.push('/users')
       } catch (err) {
-        console.log(err)
-        this.auth.error = true
+        this.error = true
       }
     }
   }
