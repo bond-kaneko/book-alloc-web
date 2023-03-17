@@ -16,10 +16,11 @@
     "deploy": "push-dir --dir=docs --branch=master --cleanup"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^2.0.4",
     "@fortawesome/fontawesome-free": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@nuxtjs/auth-next": "^5.0.0-1667386184.dfbbb54",
+    "@nuxtjs/auth-next": "5.0.0-1667386184.dfbbb54",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/pwa": "^3.3.5",

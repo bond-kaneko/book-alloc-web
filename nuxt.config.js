@@ -1,12 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
-const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-  router: {
-    base: '/<repository-name>/'
-  }
-} : {}
+
 export default {
   target: 'static',
-  ...routerBase,
+  router: {
+    middleware: ['auth']
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
 
@@ -48,7 +46,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/composition-api/module',
     'nuxt-fontawesome',
-    '@nuxtjs/auth-next',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -56,34 +54,6 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'http://localhost:8888/',
   },
-  auth: {
-    redirect: {
-      login: '/login',
-      logout: '/login',
-      callback: false,
-      home: '/users/index'
-    },
-    strategies: {
-      local: {
-        token: {
-          property: 'token',
-          global: true,
-          required: true,
-          type: 'Bearer'
-        },
-        user: {
-          property: 'user',
-          autoFetch: false
-        },
-        endpoints: {
-          login: { url: '/login', method: 'post' },
-          logout: { url: '/auth/v1/logout', method: 'post' },
-          user: { url: '/auth/v1/users/me', method: 'get' }
-        }
-      }
-    },
-  },
-
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -126,5 +96,19 @@ export default {
 
     ],
   },
-
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
+    },
+    strategies: {
+      auth0: {
+        domain: 'dev-dlgdama3kklr7u3i.us.auth0.com',
+        clientId: 'TWpTNNtOYRuPIccKBwC5ydXLN0WG71fM',
+        audience: 'https://dev-dlgdama3kklr7u3i.us.auth0.com/api/v2/',
+      }
+    },
+  },
 }

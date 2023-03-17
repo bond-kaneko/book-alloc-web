@@ -1,44 +1,49 @@
-<script setup lang="ts">
-import DoughnutChart from '@/components/charts/DoughnutChart.vue'
-import DevMessage from "~/components/dev/DevMessage.vue";
+<script>
+import {defineComponent} from 'vue'
+import DoughnutChart from "~/components/charts/DoughnutChart.vue";
 
-const redCode: string = 'rgb(255, 99, 132)'
-const blueCode: string = 'rgb(54, 162, 235)'
-const yellowCode: string = 'rgb(255, 205, 86)'
+const redCode = 'rgb(255, 99, 132)'
+const blueCode = 'rgb(54, 162, 235)'
+const yellowCode = 'rgb(255, 205, 86)'
 
-const labels = ['技術書', 'ビジネス書', '古典']
-
-type Dataset = {
-  label: string,
-  data: number[],
-  backgroundColor: string[],
-  hoverOffset: number,
-};
-
-const planDatasets: Dataset[] = [
-  {
-    label: '予定',
-    data: [30, 50, 20],
-    backgroundColor: [redCode, blueCode, yellowCode],
-    hoverOffset: 4
+export default defineComponent({
+  components: {DoughnutChart},
+  data() {
+    return {
+      labels: ['技術書', 'ビジネス書', '古典'],
+      planDatasets: [
+        {
+          label: '予定',
+          data: [30, 50, 20],
+          backgroundColor: [redCode, blueCode, yellowCode],
+          hoverOffset: 4
+        },
+      ],
+      actualDatasets: [
+        {
+          label: '実際',
+          data: [80, 10, 10],
+          backgroundColor: [redCode, blueCode, yellowCode],
+          hoverOffset: 4
+        },
+      ]
+    }
   },
-]
-
-const actualDatasets: Dataset[] = [
-  {
-    label: '実際',
-    data: [80, 10, 10],
-    backgroundColor: [redCode, blueCode, yellowCode],
-    hoverOffset: 4
-  },
-]
+  middleware: ["auth"]
+})
 </script>
 
 <template>
   <div class="container">
+    <section class="section">
+      <p>{{$auth.loggedIn}}</p>
+      <p>{{$auth.$state.user}}</p>
+      <button class="button" @click="$auth.logout()">ログアウト</button>
+    </section>
     <dev-message message="ランディングページです。ポートフォリオの円グラフと、読書中の本を表示します。"></dev-message>
     <section class="section"><h1 class="title">ページタイトル</h1></section>
-    <dev-message message="読書ポートフォリオの予実を表示します。グラフをクリックすると、該当カテゴリの本画面に移動します。試しに「技術書」をクリックしてみてください。"></dev-message>
+    <dev-message
+      message="読書ポートフォリオの予実を表示します。グラフをクリックすると、該当カテゴリの本画面に移動します。試しに「技術書」をクリックしてみてください。"></dev-message>
     <section class="section is-flex">
       <div style="flex-basis: 50%;">
         <div class="is-flex">
@@ -124,3 +129,4 @@ const actualDatasets: Dataset[] = [
     </section>
   </div>
 </template>
+
