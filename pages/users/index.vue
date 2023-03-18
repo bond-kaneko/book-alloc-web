@@ -1,10 +1,12 @@
 <script>
 import {defineComponent} from 'vue'
 import DoughnutChart from "~/components/charts/DoughnutChart.vue";
+import { useAuth0 } from '@auth0/auth0-vue';
 
 const redCode = 'rgb(255, 99, 132)'
 const blueCode = 'rgb(54, 162, 235)'
 const yellowCode = 'rgb(255, 205, 86)'
+
 
 export default defineComponent({
   components: {DoughnutChart},
@@ -29,6 +31,25 @@ export default defineComponent({
       ]
     }
   },
+  methods: {
+    async rw() {
+      const options = {
+        method: 'POST',
+        url: 'https://dev-dlgdama3kklr7u3i.us.auth0.com/oauth/token',
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        data: new URLSearchParams({
+          grant_type: 'client_credentials',
+          client_id: 'K7wnufjfTf4DWJ6hyRr0LYfAIoFa3hwF',
+          client_secret: 'uYtCR0xwYtohm96HaYzYHZ0FCSPdlf4KkjAyoyRNqyGJjXvXlRrL7tWRJ5vuV_iz',
+          audience: 'localhost:8888'
+        })
+      };
+
+      const r = this.$axios.post(options.url, options.data, options)
+      console.log(r)
+      return r
+    }
+  },
   middleware: ["auth"]
 })
 </script>
@@ -38,6 +59,7 @@ export default defineComponent({
     <section class="section">
       <p>{{$auth.loggedIn}}</p>
       <p>{{$auth.$state.user}}</p>
+      <p>{{rw()}}</p>
       <button class="button" @click="$auth.logout()">ログアウト</button>
     </section>
     <dev-message message="ランディングページです。ポートフォリオの円グラフと、読書中の本を表示します。"></dev-message>

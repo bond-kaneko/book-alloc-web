@@ -101,13 +101,20 @@ export default {
       login: '/login',
       logout: '/login',
       callback: '/login',
-      home: '/'
+      home: '/users'
     },
     strategies: {
       auth0: {
         domain: 'dev-dlgdama3kklr7u3i.us.auth0.com',
         clientId: 'TWpTNNtOYRuPIccKBwC5ydXLN0WG71fM',
         audience: 'https://dev-dlgdama3kklr7u3i.us.auth0.com/api/v2/',
+      },
+      auth0_api: {
+        scheme: 'auth0',
+        grantType: 'client_credentials',
+        clientId: 'K7wnufjfTf4DWJ6hyRr0LYfAIoFa3hwF',
+        clientSecret: 'uYtCR0xwYtohm96HaYzYHZ0FCSPdlf4KkjAyoyRNqyGJjXvXlRrL7tWRJ5vuV_iz',
+        audience: 'localhost:8888',
       }
     },
   },
