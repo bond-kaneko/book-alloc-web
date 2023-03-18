@@ -9,7 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "add": "^2.0.6",
+    "bulma": "^0.9.4",
+    "sass": "^1.59.3",
+    "vue": "^3.2.47",
+    "vue-router": "4",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
