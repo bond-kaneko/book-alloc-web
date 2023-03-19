@@ -1,9 +1,25 @@
 <script setup lang="ts">
 import {useAuth0} from '@auth0/auth0-vue';
-const {loginWithRedirect, logout, user, isAuthenticated} = useAuth0();
+import {ref} from "vue";
+import axios from "axios";
+const {loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently} = useAuth0();
 const login = () => {
   loginWithRedirect();
 }
+
+const getToken =  async () => {
+  const token = await getAccessTokenSilently();
+  return token
+}
+const token = await getToken()
+const response = await axios.get('http://localhost:8888/api/private', {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Bearer ' + token,
+  },
+});
+const data = await response
+console.log(data)
 </script>
 
 <template>
@@ -14,7 +30,9 @@ const login = () => {
 
     <p>{{isAuthenticated}}</p>
     <pre v-if="isAuthenticated">
-        <code>{{ user }}</code>
-      </pre>
+      <code>{{ user }}</code>
+    </pre>
+    <p>{{token}}</p>
+    <p>{{data}}</p>
   </div>
 </template>

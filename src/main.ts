@@ -37,7 +37,8 @@ const auth0 = createAuth0({
     domain: "dev-dlgdama3kklr7u3i.us.auth0.com",
     clientId: "TWpTNNtOYRuPIccKBwC5ydXLN0WG71fM",
     authorizationParams: {
-        redirect_uri: 'http://localhost:5173/login'
+        redirect_uri: 'http://localhost:5173/login',
+        audience: 'localhost:8888'
     }
 })
 
