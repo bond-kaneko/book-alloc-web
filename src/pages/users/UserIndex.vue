@@ -10,11 +10,9 @@ const handleLogout = () => {
   logout();
 };
 
-const publicPing = await getWithAuth(
-  import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_AUDIENCE
-);
+const publicPing = await getWithAuth(import.meta.env.VITE_API_URL + "/public");
 const privatePing = await getWithAuth(
-  import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_AUDIENCE
+  import.meta.env.VITE_API_URL + "/auth/ping"
 );
 </script>
 
