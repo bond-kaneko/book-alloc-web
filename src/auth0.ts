@@ -2,7 +2,7 @@ import {createAuth0} from "@auth0/auth0-vue";
 import axios, {AxiosRequestConfig} from "axios";
 
 export const auth0 = createAuth0({
-    domain: "dev-dlgdama3kklr7u3i.us.auth0.com",
+    domain: import.meta.env.VITE_AUTH0_DOMAIN,
     clientId: "TWpTNNtOYRuPIccKBwC5ydXLN0WG71fM",
     authorizationParams: {
         redirect_uri: 'http://localhost:5173/login',
