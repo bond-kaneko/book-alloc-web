@@ -4,7 +4,14 @@ import {RouterView} from "vue-router";
 
 <template>
   <div id="app">
-    <router-view></router-view>
+    <Suspense>
+      <template #default>
+        <router-view></router-view>
+      </template>
+      <template #fallback>
+        読み込み中
+      </template>
+    </Suspense>
   </div>
 </template>
 
