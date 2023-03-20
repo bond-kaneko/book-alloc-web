@@ -3,10 +3,10 @@ import axios, {AxiosRequestConfig} from "axios";
 
 export const auth0 = createAuth0({
     domain: import.meta.env.VITE_AUTH0_DOMAIN,
-    clientId: "TWpTNNtOYRuPIccKBwC5ydXLN0WG71fM",
+    clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
     authorizationParams: {
-        redirect_uri: 'http://localhost:5173/login',
-        audience: 'localhost:8888'
+        redirect_uri: import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_REDIRECT_URI,
+        audience: import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_AUDIENCE
     }
 })
 
