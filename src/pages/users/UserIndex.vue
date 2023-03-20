@@ -10,8 +10,12 @@ const handleLogout = () => {
   logout();
 };
 
-const publicPing = await getWithAuth("http://localhost:8888/public");
-const privatePing = await getWithAuth("http://localhost:8888/auth/ping");
+const publicPing = await getWithAuth(
+  import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_AUDIENCE
+);
+const privatePing = await getWithAuth(
+  import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_AUDIENCE
+);
 </script>
 
 <template>
