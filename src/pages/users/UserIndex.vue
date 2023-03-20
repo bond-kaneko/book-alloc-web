@@ -17,8 +17,8 @@ const privatePing = await getWithAuth("http://localhost:8888/auth/ping")
       <button @click="login">Log in</button>
       <button @click="logout">Log out</button>
 
-      <p>Public ping: {{publicPing}}</p>
-      <p>Private ping: {{privatePing}}</p>
+      <p>Public ping: {{publicPing.data}}</p>
+      <p>Private ping: {{privatePing.data}}</p>
       <p>Auth: {{ isAuthenticated }}</p>
       <pre v-if="isAuthenticated">
         <code>{{ user }}</code>

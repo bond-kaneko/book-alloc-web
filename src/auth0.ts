@@ -19,5 +19,5 @@ export const getWithAuth = async (url: string, options?: AxiosRequestConfig) => 
         ...options
     })
 
-    return result.status === 200
+    return result
 }
