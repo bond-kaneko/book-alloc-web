@@ -6,6 +6,9 @@ const {loginWithRedirect, logout, user, isAuthenticated} = useAuth0();
 const login = () => {
   loginWithRedirect();
 }
+
+const publicPing = await getWithAuth("http://localhost:8888/public")
+const privatePing = await getWithAuth("http://localhost:8888/auth/ping")
 </script>
 
 <template>
@@ -14,7 +17,9 @@ const login = () => {
       <button @click="login">Log in</button>
       <button @click="logout">Log out</button>
 
-      <p>{{ isAuthenticated }}</p>
+      <p>Public ping: {{publicPing}}</p>
+      <p>Private ping: {{privatePing}}</p>
+      <p>Auth: {{ isAuthenticated }}</p>
       <pre v-if="isAuthenticated">
         <code>{{ user }}</code>
       </pre>
