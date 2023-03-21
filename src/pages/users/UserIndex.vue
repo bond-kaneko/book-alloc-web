@@ -16,8 +16,8 @@ const privatePing = await getWithAuth(
 );
 
 const loginUser = await postWithAuth(
-  import.meta.env.VITE_API_URL + "/auth/users/login",
-  {},
+  import.meta.env.VITE_API_URL + "/auth/users/me",
+  { auth0Id: user.value.sub },
   {}
 );
 console.log(loginUser);
@@ -32,7 +32,7 @@ console.log(loginUser);
     <p>Public ping: {{ publicPing.data }}</p>
     <p>Private ping: {{ privatePing.data }}</p>
     <p>Auth: {{ isAuthenticated }}</p>
-    <p>Login User: {{ loginUser }}</p>
+    <p>Login User: {{ loginUser.data }}</p>
     <pre v-if="isAuthenticated">
         <code>{{ user }}</code>
       </pre>
