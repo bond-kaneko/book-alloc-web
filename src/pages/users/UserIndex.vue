@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuth0 } from "@auth0/auth0-vue";
-import { getWithAuth } from "../../auth0";
+import { getWithAuth, postWithAuth } from "../../auth0";
 
 const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 const handleLogin = () => {
@@ -14,6 +14,13 @@ const publicPing = await getWithAuth(import.meta.env.VITE_API_URL + "/public");
 const privatePing = await getWithAuth(
   import.meta.env.VITE_API_URL + "/auth/ping"
 );
+
+const loginUser = await postWithAuth(
+  import.meta.env.VITE_API_URL + "/auth/users/login",
+  {},
+  {}
+);
+console.log(loginUser);
 </script>
 
 <template>
@@ -25,6 +32,7 @@ const privatePing = await getWithAuth(
     <p>Public ping: {{ publicPing.data }}</p>
     <p>Private ping: {{ privatePing.data }}</p>
     <p>Auth: {{ isAuthenticated }}</p>
+    <p>Login User: {{ loginUser }}</p>
     <pre v-if="isAuthenticated">
         <code>{{ user }}</code>
       </pre>

@@ -21,3 +21,15 @@ export const getWithAuth = async (url: string, options?: AxiosRequestConfig) => 
 
     return result
 }
+
+export const postWithAuth = async (url: string, data: Object, options?: AxiosRequestConfig) => {
+    const token = await auth0.getAccessTokenSilently()
+    const result = await axios.post(url, data, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        },
+        ...options
+    })
+
+    return result
+}
