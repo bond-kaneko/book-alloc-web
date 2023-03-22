@@ -17,7 +17,11 @@ const privatePing = await getWithAuth(
 
 const loginUser = await postWithAuth(
   import.meta.env.VITE_API_URL + "/auth/users/me",
-  { auth0Id: user.value.sub },
+  {
+    auth0Id: user.value.sub,
+    email: user.value.email,
+    name: user.value.nickname,
+  },
   {}
 );
 console.log(loginUser);
