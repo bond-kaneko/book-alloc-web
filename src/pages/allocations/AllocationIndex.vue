@@ -24,7 +24,11 @@ const handleCreate = async () => {
       isActive: true,
     },
     {}
-  ).then((res) => console.log(res));
+  ).then((res) => {
+    // TODO エラーハンドリング
+    // TODO 二重送信防止
+    console.log(res);
+  });
 };
 
 const name = ref('');
