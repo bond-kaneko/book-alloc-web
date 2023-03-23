@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
 import { ref } from 'vue';
-import { getWithAuth, postWithAuth } from '../../auth0';
+import { getWithAuth, postWithAuth, putWithAuth } from '../../auth0';
 
 const name = ref('');
 const share = ref(null);
@@ -25,6 +25,18 @@ const handleCreate = async () => {
       share: share.value,
       isActive: true,
     },
+    {}
+  ).then((res) => {
+    // TODO エラーハンドリング
+    // TODO 二重送信防止
+    console.log(res);
+  });
+};
+
+const handleUpdate = async () => {
+  await putWithAuth(
+    import.meta.env.VITE_API_URL + '/auth/allocations/',
+    allocations,
     {}
   ).then((res) => {
     // TODO エラーハンドリング
@@ -58,7 +70,27 @@ const allocations = await getWithAuth(
       </form>
     </section>
     <section class="section">
-      <p>{{ allocations.data }}</p>
+      <form @submit.prevent="handleUpdate">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Share</th>
+              <th>IsActive</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="allocation in allocations.data" :key="allocation.ID">
+              <td>{{ allocation.ID }}</td>
+              <td><input type="text" v-model="allocation.Name" /></td>
+              <td><input type="text" v-model="allocation.Share" /></td>
+              <td><input type="checkbox" v-model="allocation.IsActive" /></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="button">Update</button>
+      </form>
     </section>
   </div>
 </template>

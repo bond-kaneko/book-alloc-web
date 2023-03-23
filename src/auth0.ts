@@ -35,9 +35,25 @@ export const postWithAuth = async (
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
+      ...options,
     },
-    ...options,
   });
 
+  return result;
+};
+
+export const putWithAuth = async (
+  url: string,
+  data: Object,
+  options?: AxiosRequestConfig
+) => {
+  const token = await auth0.getAccessTokenSilently();
+  const result = await axios.put(url, data, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      ...options,
+    },
+  });
   return result;
 };
