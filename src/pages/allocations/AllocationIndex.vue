@@ -84,7 +84,7 @@ const allocations = await getWithAuth(
             <tr v-for="allocation in allocations.data" :key="allocation.ID">
               <td>{{ allocation.ID }}</td>
               <td><input type="text" v-model="allocation.Name" /></td>
-              <td><input type="text" v-model="allocation.Share" /></td>
+              <td><input type="number" v-model="allocation.Share" /></td>
               <td><input type="checkbox" v-model="allocation.IsActive" /></td>
             </tr>
           </tbody>

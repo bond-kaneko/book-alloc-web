@@ -35,8 +35,8 @@ export const postWithAuth = async (
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
-      ...options,
     },
+    ...options,
   });
 
   return result;
@@ -52,8 +52,8 @@ export const putWithAuth = async (
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
-      ...options,
     },
+    ...options,
   });
   return result;
 };
