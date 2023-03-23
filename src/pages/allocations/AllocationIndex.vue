@@ -24,7 +24,7 @@ const handleCreate = async () => {
       isActive: true,
     },
     {}
-  );
+  ).then((res) => console.log(res));
 };
 
 const name = ref('');
@@ -34,14 +34,16 @@ const share = ref(null);
 <template>
   <div class="containter">
     <h1>allocation</h1>
-    <div>
-      <label for="name">Name: </label>
-      <input id="name" type="text" v-model="name" />
-    </div>
-    <div>
-      <label for="share">Share: </label>
-      <input id="share" type="number" v-model="share" />
-    </div>
-    <button class="button" @click="handleCreate()">New</button>
+    <form @submit.prevent="handleCreate">
+      <div>
+        <label for="name">Name: </label>
+        <input id="name" type="text" v-model="name" />
+      </div>
+      <div>
+        <label for="share">Share: </label>
+        <input id="share" type="number" v-model="share" />
+      </div>
+      <button class="button">New</button>
+    </form>
   </div>
 </template>
