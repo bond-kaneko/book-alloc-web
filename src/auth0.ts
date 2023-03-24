@@ -57,3 +57,16 @@ export const putWithAuth = async (
   });
   return result;
 };
+
+export const deleteWithAuth = async (
+  url: string,
+  options?: AxiosRequestConfig
+) => {
+  const token = await auth0.getAccessTokenSilently();
+  const result = await axios.delete(url, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+    ...options,
+  });
+};

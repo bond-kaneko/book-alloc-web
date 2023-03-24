@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
+import { all } from 'axios';
 import { ref } from 'vue';
-import { getWithAuth, postWithAuth, putWithAuth } from '../../auth0';
+import {
+  getWithAuth,
+  postWithAuth,
+  putWithAuth,
+  deleteWithAuth,
+} from '../../auth0';
+
+interface Allocation {
+  ID: string;
+  UserId: string;
+  Name: string;
+  Share: string;
+  IsActive: boolean;
+  IsDeleted: boolean;
+}
 
 const name = ref('');
 const share = ref(null);
@@ -15,6 +30,24 @@ const loginUser = await postWithAuth(
   },
   {}
 );
+
+const getAllocations = async () => {
+  allocations.value = [];
+  await getWithAuth(
+    import.meta.env.VITE_API_URL +
+      '/auth/allocations/' +
+      encodeURI(loginUser.data.ID),
+    {}
+  ).then((res) => {
+    res.data.map((allocation: Allocation) => {
+      allocation.IsDeleted = false;
+      return allocations.value.push(allocation);
+    });
+  });
+};
+
+let allocations = ref(Array<Allocation>());
+await getAllocations();
 
 const handleCreate = async () => {
   await postWithAuth(
@@ -31,26 +64,22 @@ const handleCreate = async () => {
     // TODO 二重送信防止
     console.log(res);
   });
+
+  await getAllocations();
 };
 
 const handleUpdate = async () => {
   await putWithAuth(
     import.meta.env.VITE_API_URL + '/auth/allocations/',
-    allocations,
+    allocations.value,
     {}
   ).then((res) => {
     // TODO エラーハンドリング
     // TODO 二重送信防止
     console.log(res);
   });
+  await getAllocations();
 };
-
-const allocations = await getWithAuth(
-  import.meta.env.VITE_API_URL +
-    '/auth/allocations/' +
-    encodeURI(loginUser.data.ID),
-  {}
-);
 </script>
 
 <template>
@@ -78,14 +107,16 @@ const allocations = await getWithAuth(
               <th>Name</th>
               <th>Share</th>
               <th>IsActive</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="allocation in allocations.data" :key="allocation.ID">
+            <tr v-for="allocation in allocations" :key="allocation.ID">
               <td>{{ allocation.ID }}</td>
               <td><input type="text" v-model="allocation.Name" /></td>
               <td><input type="number" v-model="allocation.Share" /></td>
               <td><input type="checkbox" v-model="allocation.IsActive" /></td>
+              <td><input type="checkbox" v-model="allocation.IsDeleted" /></td>
             </tr>
           </tbody>
         </table>
