@@ -6,6 +6,7 @@ import {
   postWithAuth,
   putWithAuth,
   deleteWithAuth,
+  getLoginUser,
 } from '../../auth0';
 
 interface Allocation {
@@ -21,21 +22,14 @@ const name = ref('');
 const share = ref(null);
 
 const { user } = useAuth0();
-// TODO ログインユーザーはstoreに保存する
-const loginUser = await postWithAuth(
-  import.meta.env.VITE_API_URL + '/auth/users/me',
-  {
-    auth0Id: user.value.sub,
-  },
-  {}
-);
+const loginUser = await getLoginUser();
 
 const getAllocations = async () => {
   allocations.value = [];
   await getWithAuth(
     import.meta.env.VITE_API_URL +
       '/auth/allocations/' +
-      encodeURI(loginUser.data.ID),
+      encodeURI(loginUser!.ID),
     {}
   ).then((res) => {
     res.data.map((allocation: Allocation) => {
@@ -52,7 +46,7 @@ const handleCreate = async () => {
   await postWithAuth(
     import.meta.env.VITE_API_URL + '/auth/allocations/',
     {
-      userId: loginUser.data.ID,
+      userId: loginUser!.ID,
       name: name.value,
       share: share.value,
       isActive: true,

@@ -1,5 +1,6 @@
-import { createAuth0 } from '@auth0/auth0-vue';
+import { createAuth0, useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosRequestConfig } from 'axios';
+import { User, useUserStore } from './stores/user';
 
 export const auth0 = createAuth0({
   domain: import.meta.env.VITE_AUTH0_DOMAIN,
@@ -9,6 +10,28 @@ export const auth0 = createAuth0({
     audience: import.meta.env.VITE_AUTH0_AUTHORIZATION_PARAMS_AUDIENCE,
   },
 });
+
+export const getLoginUser = async () => {
+  const userStore = useUserStore();
+  if (!userStore.isAuth0Authenticated) {
+    return null;
+  }
+
+  if (!userStore.loginUser) {
+    const { user } = useAuth0();
+    const response = await postWithAuth(
+      import.meta.env.VITE_API_URL + '/auth/users/me',
+      {
+        auth0Id: user.value.sub,
+      },
+      {}
+    );
+    const loginUser: User = response.data;
+    userStore.loginUser = loginUser;
+  }
+
+  return userStore.loginUser;
+};
 
 export const getWithAuth = async (
   url: string,
