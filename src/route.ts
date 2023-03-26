@@ -4,6 +4,7 @@ import Login from './pages/Login.vue';
 import Logout from './pages/Logout.vue';
 import Test from './pages/Test.vue';
 import AllocationIndex from './pages/allocations/AllocationIndex.vue';
+import MyBookIndex from './pages/books/mine/MyBookIndex.vue';
 
 export const routes = [
   {
@@ -26,6 +27,11 @@ export const routes = [
   {
     path: '/allocations',
     component: AllocationIndex,
+    beforeEnter: authGuard,
+  },
+  {
+    path: '/books/mine',
+    component: MyBookIndex,
     beforeEnter: authGuard,
   },
 ];
