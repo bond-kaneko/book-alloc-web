@@ -9,16 +9,33 @@ import {
   getLoginUser,
   getWithAuth,
   postWithAuth,
+  putWithAuth,
 } from '../../../auth0';
 
 const result = await getLoginUser();
 
-enum ReadingStatus {
-  Want = '読みたい',
-  Reading = '読んでいる',
-  Complete = '読んだ',
-  Stash = '中断',
-}
+const ReadingStatus = {
+  Want: 0,
+  Reading: 1,
+  Complete: 2,
+  Stash: 3,
+};
+type ReadingStatus = typeof ReadingStatus[keyof typeof ReadingStatus];
+
+const toString = (status: ReadingStatus): string => {
+  switch (status) {
+    case ReadingStatus.Want:
+      return '読みたい';
+    case ReadingStatus.Reading:
+      return '読んでる';
+    case ReadingStatus.Complete:
+      return '読んだ';
+    case ReadingStatus.Stash:
+      return '中断';
+    default:
+      return '';
+  }
+};
 
 interface ReadingExperience {
   ID?: number;
@@ -74,6 +91,18 @@ const handleDelete = async (id: number) => {
     );
   });
 };
+
+const handleUpdate = async () => {
+  const response = await putWithAuth(
+    import.meta.env.VITE_API_URL + '/auth/reading-experiences/',
+    readingExperiences.value,
+    {}
+  );
+  readingExperiences.value = [];
+  response.data.forEach((item: ReadingExperience) => {
+    readingExperiences.value.push(item);
+  });
+};
 </script>
 
 <template>
@@ -98,37 +127,63 @@ const handleDelete = async (id: number) => {
           <label for="status">Status: </label>
           <select id="status" v-model="newReadingExperience.Status">
             <option
-              v-for="status in Object.entries(ReadingStatus)"
-              :value="status[0]"
+              v-for="status in Object.values(ReadingStatus)"
+              :value="status"
+              :selected="status === ReadingStatus.Reading"
             >
-              {{ status[1] }}
+              {{ toString(status) }}
             </option>
           </select>
         </div>
         <button class="button">New</button>
       </form>
     </section>
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>AllocationId</th>
-        <th>Title</th>
-        <th>Status</th>
-        <th>StartdAt</th>
-        <th>EndAt</th>
-        <th>Actions</th>
-      </tr>
-      <tr v-for="experience in readingExperiences">
-        <td>{{ experience.ID }}</td>
-        <td>{{ experience.AllocationId }}</td>
-        <td>{{ experience.Title }}</td>
-        <td>{{ experience.Status }}</td>
-        <td>{{ experience.StartAt }}</td>
-        <td>{{ experience.EndAt }}</td>
-        <td>
-          <a class="button" @click="handleDelete(experience!.ID!)">Delete</a>
-        </td>
-      </tr>
-    </table>
+    <form @submit.prevent="handleUpdate">
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>AllocationId</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>StartdAt</th>
+          <th>EndAt</th>
+          <th>Actions</th>
+        </tr>
+        <tr v-for="experience in readingExperiences">
+          <td>{{ experience.ID }}</td>
+          <td>
+            <select v-model="experience.AllocationId">
+              <option
+                v-for="id in allocationIds"
+                :value="id"
+                :selected="id === experience.ID"
+              >
+                {{ id }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <input type="text" v-model="experience.Title" />
+          </td>
+          <td>
+            <select v-model="experience.Status">
+              <option
+                v-for="status in Object.values(ReadingStatus)"
+                :value="status"
+                :selected="status === experience.Status"
+              >
+                {{ toString(status) }}
+              </option>
+            </select>
+          </td>
+          <td>{{ experience.StartAt }}</td>
+          <td>{{ experience.EndAt }}</td>
+          <td>
+            <a class="button" @click="handleDelete(experience!.ID!)">Delete</a>
+          </td>
+        </tr>
+      </table>
+      <button type="submit" class="button">Update</button>
+    </form>
   </div>
 </template>
