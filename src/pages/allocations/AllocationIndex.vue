@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
+import { all } from 'axios';
 import { ref } from 'vue';
 import {
   Allocation,
   getMyAllocations,
 } from '../../apis/allocations/allocations';
 import {
-  getWithAuth,
   postWithAuth,
   putWithAuth,
-  deleteWithAuth,
   getLoginUser,
+  deleteWithAuth,
 } from '../../auth0';
 
 const name = ref('');
@@ -56,6 +56,15 @@ const handleUpdate = async () => {
   const result = await getMyAllocations();
   allocations.value = [...result];
 };
+
+const handleDelete = async (id: number) => {
+  await deleteWithAuth(
+    import.meta.env.VITE_API_URL + '/auth/allocations/' + id,
+    {}
+  ).then(() => {
+    allocations.value = allocations.value.filter((a) => a.ID! !== id);
+  });
+};
 </script>
 
 <template>
@@ -83,7 +92,7 @@ const handleUpdate = async () => {
               <th>Name</th>
               <th>Share</th>
               <th>IsActive</th>
-              <th>Delete</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -92,7 +101,11 @@ const handleUpdate = async () => {
               <td><input type="text" v-model="allocation.Name" /></td>
               <td><input type="number" v-model="allocation.Share" /></td>
               <td><input type="checkbox" v-model="allocation.IsActive" /></td>
-              <td><input type="checkbox" v-model="allocation.IsDeleted" /></td>
+              <td>
+                <a class="button" @click="handleDelete(allocation.ID)"
+                  >Delete</a
+                >
+              </td>
             </tr>
           </tbody>
         </table>

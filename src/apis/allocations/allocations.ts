@@ -8,7 +8,6 @@ export interface Allocation {
   IsActive: boolean;
   CreatedAt: Date;
   UpdatedAt: Date;
-  IsDeleted: boolean;
 }
 
 export const getMyAllocations = async (): Promise<Allocation[]> => {
