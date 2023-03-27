@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import {
+  Allocation,
+  getMyAllocations,
+} from '../../../apis/allocations/allocations';
 import { getLoginUser, getWithAuth, postWithAuth } from '../../../auth0';
 
 const result = await getLoginUser();
@@ -7,7 +11,7 @@ const result = await getLoginUser();
 enum ReadingStatus {
   Want = '読みたい',
   Reading = '読んでいる',
-  Completed = '読んだ',
+  Complete = '読んだ',
   Stash = '中断',
 }
 
@@ -38,6 +42,9 @@ await getMyReadingExperiences().then((data) => {
   });
 });
 
+const myAllocations = await getMyAllocations();
+const allocationIds = myAllocations.map((item: Allocation) => item.ID);
+
 const newReadingExperience = ref<ReadingExperience>({
   AllocationId: 0,
   Title: '',
@@ -59,12 +66,13 @@ const handleCreate = async () => {
       <h1>Reading History</h1>
       <form @submit.prevent="handleCreate">
         <div>
-          <label for="allocationId">AllocationId: </label>
-          <input
-            id="allocationId"
-            type="number"
+          <label for="allocationId">Allocation</label>
+          <select
+            name="allocationId"
             v-model="newReadingExperience.AllocationId"
-          />
+          >
+            <option v-for="id in allocationIds" :value="id">{{ id }}</option>
+          </select>
         </div>
         <div>
           <label for="title">Title: </label>

@@ -2,6 +2,10 @@
 import { useAuth0 } from '@auth0/auth0-vue';
 import { ref } from 'vue';
 import {
+  Allocation,
+  getMyAllocations,
+} from '../../apis/allocations/allocations';
+import {
   getWithAuth,
   postWithAuth,
   putWithAuth,
@@ -9,38 +13,15 @@ import {
   getLoginUser,
 } from '../../auth0';
 
-interface Allocation {
-  ID: string;
-  UserId: string;
-  Name: string;
-  Share: string;
-  IsActive: boolean;
-  IsDeleted: boolean;
-}
-
 const name = ref('');
 const share = ref(null);
 
 const { user } = useAuth0();
 const loginUser = await getLoginUser();
 
-const getAllocations = async () => {
-  allocations.value = [];
-  await getWithAuth(
-    import.meta.env.VITE_API_URL +
-      '/auth/allocations/' +
-      encodeURI(loginUser!.ID),
-    {}
-  ).then((res) => {
-    res.data.map((allocation: Allocation) => {
-      allocation.IsDeleted = false;
-      return allocations.value.push(allocation);
-    });
-  });
-};
-
-let allocations = ref(Array<Allocation>());
-await getAllocations();
+const allocations = ref<Allocation[]>([]);
+const result = await getMyAllocations();
+allocations.value = result;
 
 const handleCreate = async () => {
   await postWithAuth(
@@ -58,7 +39,8 @@ const handleCreate = async () => {
     console.log(res);
   });
 
-  await getAllocations();
+  const result = await getMyAllocations();
+  allocations.value = [...result];
 };
 
 const handleUpdate = async () => {
@@ -71,7 +53,8 @@ const handleUpdate = async () => {
     // TODO 二重送信防止
     console.log(res);
   });
-  await getAllocations();
+  const result = await getMyAllocations();
+  allocations.value = [...result];
 };
 </script>
 
