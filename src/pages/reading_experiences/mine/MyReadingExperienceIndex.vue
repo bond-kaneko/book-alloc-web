@@ -22,6 +22,8 @@ interface ReadingExperience {
   UpdatedAt?: Date;
 }
 
+const readingExperiences = ref<ReadingExperience[]>([]);
+
 const getMyReadingExperiences = async () => {
   const response = await getWithAuth(
     import.meta.env.VITE_API_URL + '/auth/reading-experiences/' + result!.ID
@@ -29,7 +31,12 @@ const getMyReadingExperiences = async () => {
   const data = await response.data;
   return data;
 };
-const readingExperiences = await getMyReadingExperiences();
+await getMyReadingExperiences().then((data) => {
+  readingExperiences.value = [];
+  data.forEach((item: ReadingExperience) => {
+    readingExperiences.value.push(item);
+  });
+});
 
 const newReadingExperience = ref<ReadingExperience>({
   AllocationId: 0,
@@ -42,7 +49,7 @@ const handleCreate = async () => {
     newReadingExperience.value
   );
   const data = await response.data;
-  return data;
+  readingExperiences.value.push(data);
 };
 </script>
 
