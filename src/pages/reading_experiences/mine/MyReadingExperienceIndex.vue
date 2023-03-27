@@ -4,7 +4,12 @@ import {
   Allocation,
   getMyAllocations,
 } from '../../../apis/allocations/allocations';
-import { getLoginUser, getWithAuth, postWithAuth } from '../../../auth0';
+import {
+  deleteWithAuth,
+  getLoginUser,
+  getWithAuth,
+  postWithAuth,
+} from '../../../auth0';
 
 const result = await getLoginUser();
 
@@ -58,6 +63,17 @@ const handleCreate = async () => {
   const data = await response.data;
   readingExperiences.value.push(data);
 };
+
+const handleDelete = async (id: number) => {
+  const response = await deleteWithAuth(
+    import.meta.env.VITE_API_URL + '/auth/reading-experiences/' + id,
+    {}
+  ).then(() => {
+    readingExperiences.value = readingExperiences.value.filter(
+      (item: ReadingExperience) => item.ID! !== id
+    );
+  });
+};
 </script>
 
 <template>
@@ -100,6 +116,7 @@ const handleCreate = async () => {
         <th>Status</th>
         <th>StartdAt</th>
         <th>EndAt</th>
+        <th>Actions</th>
       </tr>
       <tr v-for="experience in readingExperiences">
         <td>{{ experience.ID }}</td>
@@ -108,6 +125,9 @@ const handleCreate = async () => {
         <td>{{ experience.Status }}</td>
         <td>{{ experience.StartAt }}</td>
         <td>{{ experience.EndAt }}</td>
+        <td>
+          <a class="button" @click="handleDelete(experience!.ID!)">Delete</a>
+        </td>
       </tr>
     </table>
   </div>
