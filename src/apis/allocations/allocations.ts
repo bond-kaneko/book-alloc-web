@@ -21,3 +21,12 @@ export const getMyAllocations = async (): Promise<Allocation[]> => {
   );
   return result.data as Allocation[];
 };
+
+export const getSummary = async (): Promise<Map<String, Number>> => {
+  const loginUser = await getLoginUser();
+  const result = await getWithAuth(
+    import.meta.env.VITE_API_URL + '/auth/allocations/'+encodeURI(loginUser!.ID)+'/summary',
+    {}
+  )
+  return result.data
+}

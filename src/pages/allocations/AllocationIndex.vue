@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useAuth0 } from '@auth0/auth0-vue';
-import { all } from 'axios';
 import { ref } from 'vue';
 import {
   Allocation,
@@ -16,7 +14,6 @@ import {
 const name = ref('');
 const share = ref(null);
 
-const { user } = useAuth0();
 const loginUser = await getLoginUser();
 
 const allocations = ref<Allocation[]>([]);

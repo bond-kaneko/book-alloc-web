@@ -4,6 +4,7 @@ import Login from './pages/Login.vue';
 import Logout from './pages/Logout.vue';
 import Test from './pages/Test.vue';
 import AllocationIndex from './pages/allocations/AllocationIndex.vue';
+import AllocationSummary from './pages/allocations/summary/AllocationSummary.vue';
 import MyReadingExperienceIndex from './pages/reading_experiences/mine/MyReadingExperienceIndex.vue';
 
 export const routes = [
@@ -27,6 +28,11 @@ export const routes = [
   {
     path: '/allocations',
     component: AllocationIndex,
+    beforeEnter: authGuard,
+  },
+  {
+    path: '/allocations/summary',
+    component: AllocationSummary,
     beforeEnter: authGuard,
   },
   {
