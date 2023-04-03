@@ -155,11 +155,11 @@ const handleUpdate = async () => {
           <td>
             <select v-model="experience.AllocationId">
               <option
-                v-for="id in allocationIds"
-                :value="id"
-                :selected="id === experience.ID"
+                v-for="allocation in myAllocations"
+                :value="allocation.ID"
+                :selected="allocation.ID === experience.ID"
               >
-                {{ id }}
+                {{ allocation.Name }}
               </option>
             </select>
           </td>
