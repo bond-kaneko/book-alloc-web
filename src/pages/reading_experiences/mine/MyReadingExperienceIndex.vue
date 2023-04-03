@@ -65,7 +65,6 @@ await getMyReadingExperiences().then((data) => {
 });
 
 const myAllocations = await getMyAllocations();
-const allocationIds = myAllocations.map((item: Allocation) => item.ID);
 
 const newReadingExperience = ref<ReadingExperience>({
   AllocationId: 0,
@@ -116,7 +115,9 @@ const handleUpdate = async () => {
             name="allocationId"
             v-model="newReadingExperience.AllocationId"
           >
-            <option v-for="id in allocationIds" :value="id">{{ id }}</option>
+            <option v-for="allocation in myAllocations" :value="allocation.ID">
+              {{ allocation.Name }}
+            </option>
           </select>
         </div>
         <div>
